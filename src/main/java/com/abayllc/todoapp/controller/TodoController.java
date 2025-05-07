@@ -20,11 +20,17 @@ public class TodoController {
         this.todoRepository = todoRepository;
     }
     @GetMapping
-    public ResponseEntity<Page<Todo>> getAll(@RequestParam(required = false) Boolean completed,  Pageable pageable) {
+    public ResponseEntity<Page<Todo>> getAll(@RequestParam(required = false) Boolean completed, @RequestParam(required = false) String title,  Pageable pageable) {
         Page<Todo> todos ;
-        if(completed != null) {
-            todos = todoRepository.findByCompleted(completed,pageable);
-        }else{
+        if(completed != null &&  title != null) {
+            todos= todoRepository.findByCompletedandTitleIgnoreCase(completed, title, pageable);
+        }else if(completed != null) {
+            todos = todoRepository.findByCompleted(completed, pageable);
+        }
+        else if( title != null) {
+                todos = todoRepository.findByTitleIgnoreCase(title, pageable);
+            }
+        else {
             todos = todoRepository.findAll(pageable);
         }
        return ResponseEntity.ok(todos);
