@@ -8,6 +8,6 @@ import com.abayllc.todoapp.model.Todo;
 public interface TodoRepository extends JpaRepository<Todo, Long> {
 
     Page<Todo> findByCompleted(boolean completed, Pageable pageable);
-    Page<Todo> findByCompletedandTitleIgnoreCase(boolean completed, String title, Pageable pageable);
-    Page<Todo> findByTitleIgnoreCase(String title, Pageable pageable);
+    Page<Todo> findByCompletedAndTitleContainingIgnoreCase(boolean completed, String title, Pageable pageable);
+    Page<Todo> findByTitleContainingIgnoreCase(String title, Pageable pageable);
 }

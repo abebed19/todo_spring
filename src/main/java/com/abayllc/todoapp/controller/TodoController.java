@@ -23,12 +23,12 @@ public class TodoController {
     public ResponseEntity<Page<Todo>> getAll(@RequestParam(required = false) Boolean completed, @RequestParam(required = false) String title,  Pageable pageable) {
         Page<Todo> todos ;
         if(completed != null &&  title != null) {
-            todos= todoRepository.findByCompletedandTitleIgnoreCase(completed, title, pageable);
+            todos= todoRepository.findByCompletedAndTitleContainingIgnoreCase(completed, title, pageable);
         }else if(completed != null) {
             todos = todoRepository.findByCompleted(completed, pageable);
         }
         else if( title != null) {
-                todos = todoRepository.findByTitleIgnoreCase(title, pageable);
+                todos = todoRepository.findByTitleContainingIgnoreCase(title, pageable);
             }
         else {
             todos = todoRepository.findAll(pageable);
